@@ -26,21 +26,6 @@ CREATE TABLE employees (
     FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );
 
-INSERT INTO department (name)
-VALUES
-    ('Sales'),
-    ('Engineering'),
-    ('Finance'),
-    ('Legal');
-
-INSERT INTO roles (title, salary, department_id)
-VALUES
-  ('Customer Rep', '80000', '1'),
-  ('Senior Developer', '120000', '2'),
-  ('Accountant', '75000', '3'),
-  ('Legal Advisor', '130000', '4');
-
-INSERT INTO
 
 SELECT * FROM departments;
 SELECT * FROM roles;
