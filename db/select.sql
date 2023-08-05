@@ -10,7 +10,10 @@ SELECT r.id AS 'Role Id', role_title AS 'Role Title', d.department_name AS 'Depa
   INNER JOIN departments d ON r.department_id = d.id;
 
 -- view all employees
-SELECT first_name, last_name from employees;
+SELECT first_name AS 'First Name', last_name AS 'Last Name', role_title AS 'Role', department_name AS 'Department', salary AS 'Salary'
+	FROM employees e
+    INNER JOIN roles r ON e.role_id = r.id
+    INNER JOIN departments d ON r.department_id = d.id;
 
 -- add a department
 INSERT INTO departments (name)
