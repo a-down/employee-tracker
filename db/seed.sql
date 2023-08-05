@@ -23,3 +23,7 @@ INSERT INTO employees (first_name, last_name, role_id, manager_id)
     ('Spongebob', 'Squarepants', 2, 1),
     ('Eugene', 'Krabs', 3, 1),
     ('Squidward', 'Tentacles', 4, 1);
+  
+SELECT * FROM departments;
+SELECT * FROM roles;
+SELECT * FROM employees;
