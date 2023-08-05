@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const connection = require("./config/connection");
-const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, /*addRole*/ } = require("./lib/queries")
+const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, renderDeptChoices /*addRole*/ } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
 /*
   There are a lot of menu items presented to users in this app. The only real way you cam manage them 
@@ -70,6 +70,10 @@ function start(){
             })
           });
           break;
+
+
+        case "Add a Role":
+          const choices = renderDeptChoices()
 
 
 
