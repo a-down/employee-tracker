@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const connection = require("./config/connection");
-const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole, createRolesArray, createEmployeeArray } = require("./lib/queries")
+const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole, createRolesArray, createEmployeeArray, findRoleId, findEmployeeId, addEmployee } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
 
 
@@ -132,6 +132,8 @@ function start(){
           let lName
           let roleArr
           let employeeArr
+          let employeeManager
+          let roleId
 
           // get roles and put into array
           listAllRoles()
@@ -165,19 +167,30 @@ function start(){
                 choices: employeeArr,
               },
             ])
-          })
 
+            .then((response) => {
+              fname = response.firstName;
+              lname = response.lastName;
+              employeeManager = response.employeeManager;
+              return findRoleId(response.employeeRole)
+            })
 
+            .then((id) => {
+              roleId = id[0]
+              return findEmployeeId(employeeManager)})
 
-          // get employees and put into array
-
-          // inquirer
-
-          // set variables for addEmployee()
-
-          // send data to addEmployee()
-
-          // display all Employees and success message in terminal
+            // send data to addEmployee
+            .then((managerId) => {
+              managerId1 = managerId[0]
+              return addEmployee(fname, lname, roleId[0].id, managerId1[0].id)
+            })
+            
+            // display all Employees and success message in terminal
+            .then((res) => listAllEmployees()).then(([rows]) => {
+              displayTable(rows);
+                  console.log(`${fname} ${lname} has been added to database.`)
+                  start();
+            })})
           break;
 
         
