@@ -125,7 +125,7 @@ function start(){
         break;
       
 
-        // add an employee to the databse
+        // add an employee to the db
         case "Add an Employee":
           // declare variables
           let fName
@@ -262,15 +262,6 @@ function start(){
                   console.log(`${employeeName}'s role has been updated.`)
                   start();
             })})
-
-
-        
-
-
-
-
-
-
     }
   })
 }
