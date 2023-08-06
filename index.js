@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const connection = require("./config/connection");
-const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, renderDeptChoices /*addRole*/ } = require("./lib/queries")
+const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
 /*
   There are a lot of menu items presented to users in this app. The only real way you cam manage them 
@@ -70,64 +70,34 @@ function start(){
             })
           });
           break;
-
-
-        case "Add a Role":
-          const choices = renderDeptChoices()
-
-
-
-
-
-
-
-
-
-
-
-
-
-      // case "Add a Role":
-      //   const deptChoices = []
-      //   listAllDepartments().then((departments) => {
-      //     departments[0].forEach((department) => {deptChoices.push(department.Department)})
-      //     // console.log(deptChoices)
-      //   })
-        
-      //   .then(
-      //   inquirer.prompt([
-      //     {
-      //       type: 'input',
-      //       message: 'What is the title of the role?',
-      //       name: 'roleTitle'
-      //     },
-      //     {
-      //       type: 'input',
-      //       message: 'What is the salary of the role?',
-      //       name: 'salary'
-      //     },
-      //     {
-      //       type: 'list',
-      //       message: 'What is the department of the role?',
-      //       choices: deptChoices,
-      //       name: 'department'
-      //     }
-      //   ])
-        
-      //   .then((respones) => {
-      //     addRole(response)
-          
-      //       .then(() => {
-      //       listAllRoles()
-            
-      //         .then(([rows]) => {
-      //         displayTable(rows);
-
-      //         console.log(`${response.departmentName} Role has been added to database.`)
-      //         start();
-      //       })})}))
       
 
+      case "Add a Role":
+        let departmentsArr = []
+        listAllDepartments()
+        .then((departments) => createDepartmentsArray(departments[0], 'Department'))
+        .then((array) => {
+          
+          inquirer.prompt([
+            {
+              type: 'input',
+              message: 'What is the title of the new role?',
+              name: 'roleTitle'
+            },
+            {
+              type: 'input',
+              message: 'What is the salary of the new role?',
+              name: 'roleSalary'
+            },
+            {
+              type: 'list',
+              message: 'What department does the new role belong to?',
+              name: 'roleDepartment',
+              choices: array
+            },
+          ]).then((response) => console.log(response))
+
+        })
     }
   })
 }

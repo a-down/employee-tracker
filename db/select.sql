@@ -1,16 +1,16 @@
 USE employees_db;
 
 -- view all departments
-SELECT id AS 'Department Id', department_name AS 'Department Name' 
+SELECT id AS 'Department_Id', department_name AS 'Department_Name' 
 	FROM departments;
 
 -- view all roles
-SELECT r.id AS 'Role Id', role_title AS 'Role Title', d.department_name AS 'Department', salary AS 'Salary'
+SELECT r.id AS 'Role_Id', role_title AS 'Role_Title', d.department_name AS 'Department', salary AS 'Salary'
 	FROM roles r
   INNER JOIN departments d ON r.department_id = d.id;
 
 -- view all employees
-SELECT first_name AS 'First Name', last_name AS 'Last Name', role_title AS 'Role', department_name AS 'Department', salary AS 'Salary'
+SELECT first_name AS 'First_Name', last_name AS 'Last_Name', role_title AS 'Role', department_name AS 'Department', salary AS 'Salary'
 	FROM employees e
     INNER JOIN roles r ON e.role_id = r.id
     INNER JOIN departments d ON r.department_id = d.id;
