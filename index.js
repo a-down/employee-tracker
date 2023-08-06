@@ -80,7 +80,7 @@ function start(){
 
         // get all departments and put into array to use in prompt
         listAllDepartments()
-        .then((departments) => createDepartmentsArray(departments[0], 'Department'))
+        .then((departments) => createDepartmentsArray(departments[0]))
         .then((array) => {
           inquirer.prompt([
             {
@@ -111,7 +111,7 @@ function start(){
 
           // send data to addRole()
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             const data1 = data[0];
             addRole(data1[0].id, titleOfRole, salaryOfRole);
           })
@@ -124,8 +124,15 @@ function start(){
           })})
         break;
       
+
+        // add an employee to the databse
         case "Add an Employee":
-          console.log('hi')
+          // declare variables
+          let fName
+          let lName
+          let roleArr
+          let employeeArr
+          // get
           break;
 
         
