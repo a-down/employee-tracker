@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const connection = require("./config/connection");
-const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole, createRolesArray, createEmployeeArray, findRoleId, findEmployeeId, addEmployee } = require("./lib/queries")
+const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole, createRolesArray, createEmployeeArray, findRoleId, findEmployeeId, addEmployee, updateEmployeeRole } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
 
 
@@ -139,9 +139,13 @@ function start(){
           listAllRoles()
           .then((roles) => createRolesArray(roles[0]))
           .then((arr) => roleArr = arr)
+
+          // get employees and put into array
           .then(() => listAllEmployees())
           .then((employees) => createEmployeeArray(employees[0]))
           .then((arr) => employeeArr = arr)
+
+          // terminal prompt
           .then(() => {
             inquirer.prompt([
               {
@@ -174,19 +178,20 @@ function start(){
               fname = response.firstName;
               lname = response.lastName;
               employeeManager = response.employeeManager;
-              return findRoleId(response.employeeRole)
+              return findRoleId(response.employeeRole);
             })
 
             // assign role id to variable
             // find employee id of manager
             .then((id) => {
-              roleId = id[0]
-              return findEmployeeId(employeeManager)})
+              roleId = id[0];
+              return findEmployeeId(employeeManager);
+            })
 
             // send data to addEmployee
             .then((managerId) => {
-              managerId1 = managerId[0]
-              return addEmployee(fname, lname, roleId[0].id, managerId1[0].id)
+              managerId1 = managerId[0];
+              return addEmployee(fname, lname, roleId[0].id, managerId1[0].id);
             })
             
             // display all Employees and success message in terminal
@@ -196,6 +201,65 @@ function start(){
                   start();
             })})
           break;
+
+        
+        // update role of an existing employee
+        case "Update Employee Role":
+          // declare variables
+          let rolesList
+          let employeeList
+          let employeeName
+          let newRoleId
+
+          // get roles and put into array
+          listAllRoles()
+          .then((roles) => createRolesArray(roles[0]))
+          .then((arr) => rolesList = arr)
+
+          // get employees and put into array
+          .then(() => listAllEmployees())
+          .then((employees) => createEmployeeArray(employees[0]))
+          .then((arr) => employeeList = arr)
+
+          // terminal prompt
+          .then(() => {
+            inquirer.prompt([
+              {
+                type: 'list',
+                message: "Which employee do you want to update the role for??",
+                name: 'employeeName',
+                choices: employeeList,
+              },
+              {
+                type: 'list',
+                message: 'What is their new role?',
+                name: 'employeeRole',
+                choices: rolesList,
+              },
+            ])
+          
+            // find employee id
+            .then((response) => {
+              employeeName = response.employeeName;
+              return findRoleId(response.employeeRole);
+            })
+
+            // find role id
+            .then((id) => {
+              newRoleId = id[0];
+              return findEmployeeId(employeeName);
+            })
+
+            // send data to updateEmployeeRole
+              .then((employeeId) => {
+              let employeeId1 = employeeId[0];
+              return updateEmployeeRole(employeeId1[0].id, newRoleId[0].id);
+            })
+
+            
+          
+          })
+
 
         
 
