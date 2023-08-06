@@ -168,6 +168,8 @@ function start(){
               },
             ])
 
+            // assign prompt responses to use later
+            // find id for role
             .then((response) => {
               fname = response.firstName;
               lname = response.lastName;
@@ -175,6 +177,8 @@ function start(){
               return findRoleId(response.employeeRole)
             })
 
+            // assign role id to variable
+            // find employee id of manager
             .then((id) => {
               roleId = id[0]
               return findEmployeeId(employeeManager)})
