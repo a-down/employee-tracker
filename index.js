@@ -256,9 +256,12 @@ function start(){
               return updateEmployeeRole(employeeId1[0].id, newRoleId[0].id);
             })
 
-            
-          
-          })
+            // display all Employees and success message in terminal
+            .then((res) => listAllEmployees()).then(([rows]) => {
+              displayTable(rows);
+                  console.log(`${employeeName}'s role has been updated.`)
+                  start();
+            })})
 
 
         
