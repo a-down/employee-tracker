@@ -107,7 +107,11 @@ function start(){
             const data1 = data[0]
             addRole(data1[0].id, titleOfRole, salaryOfRole)
           })
-          .then((res) => console.log(res))
+          .then((res) => listAllRoles()).then(([rows]) => {
+            displayTable(rows);
+                console.log(`${titleOfRole} Role has been added to database.`)
+                start();
+          })
         })
     }
   })
