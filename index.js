@@ -132,7 +132,52 @@ function start(){
           let lName
           let roleArr
           let employeeArr
-          // get
+
+          // get roles and put into array
+          listAllRoles()
+          .then((roles) => console.log(roles[0]))
+          .then((arr) => roleArr = arr)
+          .then(() => listAllEmployees())
+          .then((employees) => console.log(employees[0]))
+          .then((arr) => employeeArr = arr)
+          .then(() => {
+            inquirer.prompt([
+              {
+                type: 'input',
+                message: "What is the employee's first name?",
+                name: 'firstName'
+              },
+              {
+                type: 'input',
+                message: "What is the employee's last name?",
+                name: 'lastName'
+              },
+              {
+                type: 'list',
+                message: 'What role will be assigned to the employee?',
+                name: 'employeeRole',
+                choices: roleArr,
+              },
+              {
+                type: 'list',
+                message: "Who is the new employee's manager?",
+                name: 'employeeManager',
+                choices: employeeArr,
+              },
+            ])
+          })
+
+
+
+          // get employees and put into array
+
+          // inquirer
+
+          // set variables for addEmployee()
+
+          // send data to addEmployee()
+
+          // display all Employees and success message in terminal
           break;
 
         
