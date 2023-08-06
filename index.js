@@ -2,14 +2,10 @@ const inquirer = require("inquirer");
 const connection = require("./config/connection");
 const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
-/*
-  There are a lot of menu items presented to users in this app. The only real way you cam manage them 
-  is by creating a function to handle each one.
-
-  I'm giving you a bit of starter code below.
-*/ 
 
 
+// start the application
+// ask user what part of the CMS they want to access
 function start(){
   inquirer.prompt([
     {   
@@ -30,6 +26,7 @@ function start(){
     switch(response.option){
 
 
+      // list all departments in the db
       case "List all Departments":
         listAllDepartments().then(([rows]) => {
           displayTable(rows);
@@ -38,6 +35,7 @@ function start(){
         break;
 
 
+      // list all roles in the db
       case "List all Roles":
         listAllRoles().then(([rows]) => {
           displayTable(rows);
@@ -46,6 +44,7 @@ function start(){
         break;
       
 
+      // list all employees in the db
       case "List all Employees":
         listAllEmployees().then(([rows]) => {
           displayTable(rows);
@@ -54,6 +53,7 @@ function start(){
         break;
       
 
+      // add a department to the db
       case "Add a Department":
         inquirer.prompt([
           {
@@ -64,7 +64,7 @@ function start(){
             addDepartment(response).then(() => {
               listAllDepartments().then(([rows]) => {
                 displayTable(rows);
-                console.log(`${response.departmentName} Department has been added to database.`)
+                console.log(`${response.departmentName} Department has been added to database.`);
                 start();
               });
             })
@@ -72,14 +72,16 @@ function start(){
           break;
       
 
+      // add a role to the db
       case "Add a Role":
-        let departmentsArr = []
+        // declare variables
         let titleOfRole
         let salaryOfRole
+
+        // get all departments and put into array to use in prompt
         listAllDepartments()
         .then((departments) => createDepartmentsArray(departments[0], 'Department'))
         .then((array) => {
-          
           inquirer.prompt([
             {
               type: 'input',
@@ -98,21 +100,41 @@ function start(){
               choices: array
             },
           ])
+
+          // set variables for addRole() 
+          // includes getting the corresponding ID for department choice
           .then((response) => {
-            titleOfRole = response.roleTitle
-            salaryOfRole = response.roleSalary
-            return findDepartmentId(response.roleDepartment)})
-          .then((data) => {
-            console.log(data)
-            const data1 = data[0]
-            addRole(data1[0].id, titleOfRole, salaryOfRole)
+            titleOfRole = response.roleTitle;
+            salaryOfRole = response.roleSalary;
+            return findDepartmentId(response.roleDepartment)
           })
+
+          // send data to addRole()
+          .then((data) => {
+            console.log(data);
+            const data1 = data[0];
+            addRole(data1[0].id, titleOfRole, salaryOfRole);
+          })
+
+          // display all Roles and success message in terminal
           .then((res) => listAllRoles()).then(([rows]) => {
             displayTable(rows);
                 console.log(`${titleOfRole} Role has been added to database.`)
                 start();
-          })
-        })
+          })})
+        break;
+      
+        case "Add an Employee":
+          console.log('hi')
+          break;
+
+        
+
+
+
+
+
+
     }
   })
 }
