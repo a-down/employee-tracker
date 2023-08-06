@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const connection = require("./config/connection");
-const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole } = require("./lib/queries")
+const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole, createRolesArray, createEmployeeArray } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
 
 
@@ -135,10 +135,10 @@ function start(){
 
           // get roles and put into array
           listAllRoles()
-          .then((roles) => console.log(roles[0]))
+          .then((roles) => createRolesArray(roles[0]))
           .then((arr) => roleArr = arr)
           .then(() => listAllEmployees())
-          .then((employees) => console.log(employees[0]))
+          .then((employees) => createEmployeeArray(employees[0]))
           .then((arr) => employeeArr = arr)
           .then(() => {
             inquirer.prompt([
