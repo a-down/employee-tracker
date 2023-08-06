@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const connection = require("./config/connection");
-const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId } = require("./lib/queries")
+const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
 /*
   There are a lot of menu items presented to users in this app. The only real way you cam manage them 
@@ -74,6 +74,8 @@ function start(){
 
       case "Add a Role":
         let departmentsArr = []
+        let titleOfRole
+        let salaryOfRole
         listAllDepartments()
         .then((departments) => createDepartmentsArray(departments[0], 'Department'))
         .then((array) => {
@@ -95,10 +97,17 @@ function start(){
               name: 'roleDepartment',
               choices: array
             },
-          ]).then((response) => findDepartmentId(response.roleDepartment))
+          ])
+          .then((response) => {
+            titleOfRole = response.roleTitle
+            salaryOfRole = response.roleSalary
+            return findDepartmentId(response.roleDepartment)})
           .then((data) => {
+            console.log(data)
             const data1 = data[0]
-            console.log(data1[0].id)})
+            addRole(data1[0].id, titleOfRole, salaryOfRole)
+          })
+          .then((res) => console.log(res))
         })
     }
   })
