@@ -4,7 +4,7 @@ The goal was to create a CMS for a business owner to view and manage the departm
 - On launch, the user will be presented with the following options:
     ```md
     View All Departments
-    View ALl Roles
+    View All Roles
     View All Employees
     Add a Department
     Add a Role
