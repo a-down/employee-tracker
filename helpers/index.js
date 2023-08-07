@@ -1,5 +1,3 @@
-
-
 function createDepartmentsArray(arr){
   // console.log(arr)
   let newArr = []
