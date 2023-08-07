@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
-const connection = require("./config/connection");
-const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, createDepartmentsArray, findDepartmentId, addRole, createRolesArray, createEmployeeArray, findRoleId, findEmployeeId, addEmployee, updateEmployeeRole } = require("./lib/queries")
+const { listAllDepartments, listAllRoles, listAllEmployees, addDepartment, findDepartmentId, addRole, findRoleId, findEmployeeId, addEmployee, updateEmployeeRole } = require("./lib/queries")
 const { displayTable } = require("./lib/displays")
+const { createDepartmentsArray, createRolesArray, createEmployeeArray } = require("./helpers/index")
 
 
 // start the application
